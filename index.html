@@ -567,8 +567,7 @@ import {
 import {
   getAuth,
   GoogleAuthProvider,
-  signInWithRedirect,
-  getRedirectResult,
+  signInWithPopup,
   onAuthStateChanged,
   signOut
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
@@ -592,15 +591,16 @@ const storage = getStorage(app);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
   getRedirectResult(auth)
-  .then((result) => {
-    if (result) {
-      console.log("Login Success");
-    }
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+.then((result) => {
+  console.log("Redirect Result =", result);
 
+  if (result?.user) {
+    console.log("User Email =", result.user.email);
+  }
+})
+.catch((error) => {
+  console.error("Redirect Error =", error);
+});
 const googleLoginBtn =
 document.getElementById("googleLoginBtn");
 
@@ -608,8 +608,8 @@ googleLoginBtn.addEventListener("click", async () => {
 
   try {
 
-    await signInWithRedirect(auth, provider);
-
+const result = await signInWithPopup(auth, provider);
+console.log(result.user);
   } catch (err) {
 
     console.error(err);
