@@ -47,6 +47,7 @@
       align-items: center;
       justify-content: flex-end;
       pointer-events: none;
+      transition: bottom 0.25s ease;
     }
    
 
@@ -586,21 +587,36 @@ measurementId: "G-J8FYJFS3XW"
 const avatarContainer =
 document.querySelector('.avatar-fixed-container');
 
-const initialHeight = window.innerHeight;
+if (window.visualViewport) {
 
-window.addEventListener('resize', () => {
+  function moveAvatar() {
 
-  const currentHeight = window.innerHeight;
+    const keyboardHeight =
+      window.innerHeight -
+      window.visualViewport.height;
 
-  if (currentHeight < initialHeight - 150) {
-    // Keyboard opened
-    avatarContainer.style.bottom = "280px";
-  } else {
-    // Keyboard closed
-    avatarContainer.style.bottom = "15px";
+    if (keyboardHeight > 100) {
+
+      avatarContainer.style.bottom =
+        (keyboardHeight + 20) + "px";
+
+    } else {
+
+      avatarContainer.style.bottom = "15px";
+
+    }
   }
 
-});
+  window.visualViewport.addEventListener(
+    "resize",
+    moveAvatar
+  );
+
+  window.visualViewport.addEventListener(
+    "scroll",
+    moveAvatar
+  );
+}
 
 const app = initializeApp(firebaseConfig);
 
@@ -681,28 +697,29 @@ onAuthStateChanged(auth, (user) => {
 
 
 const avatar = document.getElementById('avatarCharacter');
-  const avatarContainer =
-document.querySelector('.avatar-fixed-container');
-
+ 
 if (window.visualViewport) {
 
-  function moveAvatar() {
+ function moveAvatar() {
 
-    const keyboardHeight =
-      window.innerHeight -
-      window.visualViewport.height;
+  const vv = window.visualViewport;
 
-    if (keyboardHeight > 120) {
+  if (!vv) return;
 
-      avatarContainer.style.bottom =
-        (keyboardHeight + 20) + "px";
+  const keyboardHeight =
+    window.innerHeight - vv.height;
 
-    } else {
+  if (keyboardHeight > 100) {
 
-      avatarContainer.style.bottom = "15px";
+    avatarContainer.style.bottom =
+      `${keyboardHeight + 40}px`;
 
-    }
+  } else {
+
+    avatarContainer.style.bottom = "15px";
+
   }
+}
 
   window.visualViewport.addEventListener(
     "resize",
@@ -928,7 +945,7 @@ killStream(
 
   try {
 
-    const currentUser = currentUser;
+    const user = currentUser;
 
     const q = query(
       collection(db, "monoWishes"),
@@ -986,8 +1003,8 @@ const senderName =
 document.getElementById("name").value.trim();
 await addDoc(collection(db, "monoWishes"), {
 
-  uid: currentUser.uid,
-  email: currentUser.email,
+  uid: user.uid,
+  email: user.email,
 
   name: senderName, // ✅ sender's entered name
 
