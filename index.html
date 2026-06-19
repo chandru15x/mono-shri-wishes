@@ -629,7 +629,11 @@ document.getElementById("logoutBtn")
   await signOut(auth);
 
 });
+let currentUser = null;
+
 onAuthStateChanged(auth, (user) => {
+
+  currentUser = user;
 
   if (user) {
 
@@ -863,7 +867,7 @@ killStream(
  wishForm.addEventListener('submit', async function (e) {
   e.preventDefault();
 
-  if (!auth.currentUser) {
+  if (!currentUser) {
     alert("Please sign in with Google first");
     return;
   }
@@ -873,7 +877,7 @@ killStream(
 
   try {
 
-    const currentUser = auth.currentUser;
+    const currentUser = currentUser;
 
     const q = query(
       collection(db, "monoWishes"),
