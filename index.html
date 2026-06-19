@@ -15,7 +15,7 @@
       min-height: 100vh;
       box-sizing: border-box;
     }
-
+   
     .form-card {
       max-width: 500px;
       margin: 20px auto 160px auto; /* Increased space to accommodate full body character setup safely */
@@ -48,6 +48,15 @@
       justify-content: flex-end;
       pointer-events: none;
     }
+    .avatar-fixed-container {
+  position: fixed;
+  bottom: 15px;
+  right: 25px;
+  width: 140px;
+  height: 220px;
+  z-index: 9999;
+  transition: bottom 0.3s ease;
+}
 
     /* Head Component */
     .character {
@@ -582,7 +591,24 @@ messagingSenderId: "917883625480",
 appId: "1:917883625480:web:1ded71da5fe772925971bd",
 measurementId: "G-J8FYJFS3XW"
 };
+const avatarContainer =
+document.querySelector('.avatar-fixed-container');
 
+const initialHeight = window.innerHeight;
+
+window.addEventListener('resize', () => {
+
+  const currentHeight = window.innerHeight;
+
+  if (currentHeight < initialHeight - 150) {
+    // Keyboard opened
+    avatarContainer.style.bottom = "280px";
+  } else {
+    // Keyboard closed
+    avatarContainer.style.bottom = "15px";
+  }
+
+});
 
 const app = initializeApp(firebaseConfig);
 
@@ -951,6 +977,27 @@ await addDoc(collection(db, "monoWishes"), {
 
   createdAt: serverTimestamp()
 });
+    const avatarContainer =
+document.querySelector('.avatar-fixed-container');
+
+if (window.visualViewport) {
+
+  window.visualViewport.addEventListener('resize', () => {
+
+    const keyboardHeight =
+      window.innerHeight -
+      window.visualViewport.height;
+
+    if (keyboardHeight > 100) {
+      avatarContainer.style.bottom =
+        (keyboardHeight + 20) + "px";
+    } else {
+      avatarContainer.style.bottom = "15px";
+    }
+
+  });
+
+}
 
     // ✅ Mark as submitted (ONLY after success)
 
