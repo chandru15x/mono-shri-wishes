@@ -48,15 +48,7 @@
       justify-content: flex-end;
       pointer-events: none;
     }
-    .avatar-fixed-container {
-  position: fixed;
-  bottom: 15px;
-  right: 25px;
-  width: 140px;
-  height: 220px;
-  z-index: 9999;
-  transition: bottom 0.3s ease;
-}
+   
 
     /* Head Component */
     .character {
@@ -689,6 +681,39 @@ onAuthStateChanged(auth, (user) => {
 
 
 const avatar = document.getElementById('avatarCharacter');
+  const avatarContainer =
+document.querySelector('.avatar-fixed-container');
+
+if (window.visualViewport) {
+
+  function moveAvatar() {
+
+    const keyboardHeight =
+      window.innerHeight -
+      window.visualViewport.height;
+
+    if (keyboardHeight > 120) {
+
+      avatarContainer.style.bottom =
+        (keyboardHeight + 20) + "px";
+
+    } else {
+
+      avatarContainer.style.bottom = "15px";
+
+    }
+  }
+
+  window.visualViewport.addEventListener(
+    "resize",
+    moveAvatar
+  );
+
+  window.visualViewport.addEventListener(
+    "scroll",
+    moveAvatar
+  );
+}
   function setAvatarState(state) {
   avatar.classList.remove('smiling', 'irritated', 'thumbs-up-state');
   if (state) avatar.classList.add(state);
@@ -977,28 +1002,7 @@ await addDoc(collection(db, "monoWishes"), {
 
   createdAt: serverTimestamp()
 });
-    const avatarContainer =
-document.querySelector('.avatar-fixed-container');
-
-if (window.visualViewport) {
-
-  window.visualViewport.addEventListener('resize', () => {
-
-    const keyboardHeight =
-      window.innerHeight -
-      window.visualViewport.height;
-
-    if (keyboardHeight > 100) {
-      avatarContainer.style.bottom =
-        (keyboardHeight + 20) + "px";
-    } else {
-      avatarContainer.style.bottom = "15px";
-    }
-
-  });
-
-}
-
+  
     // ✅ Mark as submitted (ONLY after success)
 
     setAvatarState('thumbs-up-state');
