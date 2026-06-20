@@ -759,6 +759,40 @@ if (window.visualViewport) {
   const videoCaptureBlock = document.getElementById('videoCaptureBlock');
   const liveVideoView = document.getElementById('liveVideoView');
   const videoCaptureTrigger = document.getElementById('videoCaptureTrigger');
+  videoCaptureTrigger.addEventListener("click", () => {
+
+  const canvas = document.createElement("canvas");
+
+  canvas.width = liveVideoView.videoWidth;
+  canvas.height = liveVideoView.videoHeight;
+
+  const ctx = canvas.getContext("2d");
+
+  ctx.drawImage(
+    liveVideoView,
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  base64PhotoString =
+    canvas.toDataURL("image/jpeg");
+
+  photoPreview.src =
+    base64PhotoString;
+
+  previewContainer.style.display =
+    "block";
+
+  killStream(
+    photoStream,
+    videoCaptureBlock,
+    liveVideoView
+  );
+
+  setAvatarState("");
+});
   const previewContainer = document.getElementById('preview-container');
   const photoPreview = document.getElementById('photo-preview');
   const flushImageSelection = document.getElementById('flushImageSelection');
