@@ -587,25 +587,6 @@ measurementId: "G-J8FYJFS3XW"
 const avatarContainer =
 document.querySelector('.avatar-fixed-container');
 
-if (window.visualViewport) {
-
-  function moveAvatar() {
-
-    const keyboardHeight =
-      window.innerHeight -
-      window.visualViewport.height;
-
-    if (keyboardHeight > 100) {
-
-      avatarContainer.style.bottom =
-        (keyboardHeight + 20) + "px";
-
-    } else {
-
-      avatarContainer.style.bottom = "15px";
-
-    }
-  }
 
   window.visualViewport.addEventListener(
     "resize",
@@ -875,29 +856,13 @@ killStream(
     };
 
     mediaRecorder.onstop = () => {
-      videoBlobToUpload = videoBlob;
-      if (videoBlobToUpload) {
-
-  const videoRef = ref(
-    storage,
-    `videos/${Date.now()}.webm`
-  );
-
-  await uploadBytes(
-    videoRef,
-    videoBlobToUpload
-  );
-
-  videoURL = await getDownloadURL(videoRef);
-}
-
-      const videoBlob = new Blob(recordedChunks, {
+       const videoBlob = new Blob(recordedChunks, {
         type: 'video/webm'
       });
       
 
-
-      const fileReader = new FileReader();
+      videoBlobToUpload = videoBlob;
+       const fileReader = new FileReader();
 
       fileReader.onload = function (evt) {
         base64VideoString = evt.target.result;
@@ -914,6 +879,11 @@ killStream(
       mediaRecorder = null;
       recordedChunks = [];
     };
+      
+      
+     
+
+     
 
     mediaRecorder.start();
 
