@@ -587,6 +587,25 @@ measurementId: "G-J8FYJFS3XW"
 const avatarContainer =
 document.querySelector('.avatar-fixed-container');
 
+if (window.visualViewport) {
+
+  function moveAvatar() {
+
+    const keyboardHeight =
+      window.innerHeight -
+      window.visualViewport.height;
+
+    if (keyboardHeight > 100) {
+
+      avatarContainer.style.bottom =
+        (keyboardHeight + 20) + "px";
+
+    } else {
+
+      avatarContainer.style.bottom = "15px";
+
+    }
+  }
 
   window.visualViewport.addEventListener(
     "resize",
