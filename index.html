@@ -780,6 +780,7 @@ if (window.visualViewport) {
   let mediaRecorder = null;
   let recordedChunks = [];
   let isRecording = false;
+  let videoBlobToUpload = null;
 
   fileSelector.addEventListener('change', function(e) {
     killStream(photoStream, videoCaptureBlock, liveVideoView);
@@ -874,6 +875,21 @@ killStream(
     };
 
     mediaRecorder.onstop = () => {
+      videoBlobToUpload = videoBlob;
+      if (videoBlobToUpload) {
+
+  const videoRef = ref(
+    storage,
+    `videos/${Date.now()}.webm`
+  );
+
+  await uploadBytes(
+    videoRef,
+    videoBlobToUpload
+  );
+
+  videoURL = await getDownloadURL(videoRef);
+}
 
       const videoBlob = new Blob(recordedChunks, {
         type: 'video/webm'
@@ -949,7 +965,7 @@ killStream(
 
     const q = query(
       collection(db, "monoWishes"),
-      where("uid", "==", currentUser.uid)
+      where("uid", "==", user.uid)
     );
 
     const snapShot = await getDocs(q);
@@ -1008,8 +1024,8 @@ await addDoc(collection(db, "monoWishes"), {
 
   name: senderName, // ✅ sender's entered name
 
-  googleName: currentUser.displayName, // optional
-  photo: currentUser.photoURL,
+  googleName: user.displayName, // optional
+  photo: user.photoURL,
 
   wish: document.getElementById('wish').value.trim(),
   life: document.getElementById('life').value.trim(),
@@ -1058,5 +1074,4 @@ await addDoc(collection(db, "monoWishes"), {
       
 </script>
 </body>
-</html></body>
 </html>
