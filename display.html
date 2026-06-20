@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mono Shri Birthday Wall 🎉</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Pacifico&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(rgba(255, 240, 245, 0.45), rgba(255, 240, 245, 0.45)), 
+                  url('https://i.postimg.cc/qMxMmhfD/Whats-App-Image-2026-05-26-at-1-41-25-PM.png') no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      color: #311d25;
+      min-height: 100vh;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px 10px 20px;
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 3.2rem;
+      color: #ff4f81;
+      margin: 0 0 5px 0;
+      text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
+      margin: 0;
+    }
+
+    .slider-outer-container {
+      max-width: 650px;
+      margin: auto;
+      padding: 0 20px;
+      position: relative;
+    }
+
+    .slider-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .nav-btn {
+      background: #ff4f81;
+      color: white;
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      font-size: 1.3rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: background 0.2s;
+    }
+
+    .nav-btn:hover {
+      background: #e03d6d;
+    }
+
+    .slider-viewbox {
+      overflow: hidden;
+      width: 100%;
+      border-radius: 20px;
+    }
+
+    .container {
+      display: flex;
+      width: 100%;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .card {
+      min-width: 100%;
+      box-sizing: border-box;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .scratch-container {
+      position: relative;
+      width: 100%;
+      margin-bottom: 12px;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .scratch-container img {
+      width: 100%;
+      display: block;
+      border-radius: 14px;
+    }
+
+    .scratch-card {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 14px;
+      cursor: pointer;
+      touch-action: none; 
+      transition: opacity 0.4s ease;
+      z-index: 2;
+    }
+
+    .scratch-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #ffffff;
+      font-size: 1.4rem;
+      font-weight: bold;
+      pointer-events: none;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      transition: opacity 0.3s ease;
+      z-index: 3;
+    }
+
+    .scratch-container.interacted .scratch-text {
+      opacity: 0;
+    }
+
+    .download-icon-btn {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      cursor: pointer;
+      text-decoration: none;
+      z-index: 4;
+      opacity: 0;
+      transform: scale(0.7);
+      transition: opacity 0.4s ease, transform 0.4s ease, background-color 0.2s;
+      pointer-events: none;
+    }
+
+    .download-icon-btn.show {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+
+    .download-icon-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: #ff4f81;
+    }
+
+    /* Embedded Video Wish Component Styles */
+    .embedded-video-card {
+      width: 100%;
+      margin: 10px 0;
+      border-radius: 12px;
+      background: #1e1518;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      display: block;
+    }
+
+    .card h2 {
+      color: #ff4f81;
+      margin: 0 0 10px 0;
+      font-size: 1.6rem;
+    }
+
+    .label {
+      font-weight: 600;
+      margin-top: 10px;
+      font-size: 0.95rem;
+      color: #ff4f81;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    p {
+      line-height: 1.5;
+      margin: 2px 0 8px 0;
+      font-size: 1rem;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+    
+    .no-wishes {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 20px;
+      width: 100%;
+    }
+    #confettiCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+}
+  </style>
+</head>
+<link rel="icon" href="data:,">
+<link rel="icon" id="dynamic-favicon">
+<body>
+
+<div class="slider-outer-container">
+  <header>
+    <h1>Happy Birthday Mono Shri 🎂</h1>
+    <div class="subtitle">Wishes and memories from people who love you 💖</div>
+  </header>
+
+  <div class="slider-wrapper">
+    <button class="nav-btn" onclick="prevSlide()">❮</button>
+
+    <div class="slider-viewbox">
+      <div class="container" id="wishContainer"></div>
+    </div>
+
+    <button class="nav-btn" onclick="nextSlide()">❯</button>
+  </div>
+</div>
+
+<script type="module">
+   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+import {
+  getFirestore,
+  collection,
+  query,
+  orderBy,
+  onSnapshot
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+   const firebaseConfig = {
+  apiKey: "AIzaSyDNBY9TAc97hcR7sjy4xJpe-J7sOTmiMIA",
+  authDomain: "chandru-bccea.firebaseapp.com",
+  databaseURL: "https://chandru-bccea-default-rtdb.firebaseio.com",
+  projectId: "chandru-bccea",
+  storageBucket: "chandru-bccea.firebasestorage.app",
+  messagingSenderId: "917883625480",
+  appId: "1:917883625480:web:1ded71da5fe772925971bd",
+  measurementId: "G-J8FYJFS3XW"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+  let currentSlide = 0;
+  const container =
+document.getElementById('wishContainer');
+
+loadWishes();
+
+function loadWishes() {
+
+  const q = query(
+    collection(db, "monoWishes"),
+    orderBy("createdAt", "desc")
+  );
+
+onSnapshot(q, (snapshot) => {
+
+container.innerHTML = "";
+  if (snapshot.empty) {
+
+    container.innerHTML = `
+      <div class="no-wishes">
+        <h2>No wishes yet! 🌸</h2>
+        <p>Share the link with friends to gather memories.</p>
+      </div>
+    `;
+
+    document.querySelectorAll('.nav-btn')
+      .forEach(btn => btn.style.display = 'none');
+
+    return;
+  }
+
+  snapshot.docs.forEach((docSnap, index) => {
+
+    const item = docSnap.data();
+
+    const card = document.createElement('div');
+
+    card.classList.add('card');
+
+    card.innerHTML = `
+
+      ${item.photoURL ? `
+      <div class="scratch-container">
+        <img src="${item.photoURL}" alt="Birthday Memory">
+        <canvas class="scratch-card"></canvas>
+        <div class="scratch-text">Scratch to Reveal ✨</div>
+
+        <button
+  class="download-icon-btn"
+  id="dl-icon-${index}"
+  onclick="downloadImage('${item.photoURL}')">
+  ⬇️
+</button>
+      </div>
+      ` : ''}
+
+      <h2>${item.name}</h2>
+
+      ${item.videoURL ? `
+      <div class="label">
+        Video Wish 📹
+      </div>
+
+      <video
+        class="embedded-video-card"
+        src="${item.videoURL}"
+        controls
+        playsinline>
+      </video>
+      ` : ''}
+
+      <div class="label">
+        Birthday Wish 💌
+      </div>
+
+      <p>${item.wish}</p>
+
+      <div class="label">
+        Mono Shri in My Life 🌸
+      </div>
+
+      <p>${item.life}</p>
+    `;
+
+    container.appendChild(card);
+
+  });
+
+  
+  currentSlide = 0;
+  updateSlider();
+  initScratchCards();
+  
+});
+}
+window.downloadImage = function(url) {
+
+  const a =
+    document.createElement("a");
+
+  a.href = url;
+
+  a.target = "_blank";
+
+  document.body.appendChild(a);
+
+  a.click();
+
+  a.remove();
+};
+
+window.updateSlider = function () {
+  container.style.transform = `translateX(-${currentSlide * 100}%)`;
+};
+
+window.nextSlide = function() {
+
+  const total =
+    document.querySelectorAll('.card').length;
+
+  if (currentSlide < total - 1) {
+    currentSlide++;
+    updateSlider();
+  }
+};
+
+window.prevSlide = function() {
+
+  if (currentSlide > 0) {
+    currentSlide--;
+    updateSlider();
+  }
+};
+function initScratchCards() {
+  console.log("Scratch cards initialized");
+
+  document.querySelectorAll(".scratch-card")
+    .forEach((canvas, index) => {
+
+      console.log("Canvas found:", canvas);
+
+      const container =
+        canvas.closest(".scratch-container");
+
+      const downloadBtn =
+        container.querySelector(".download-icon-btn");
+
+      const ctx =
+        canvas.getContext("2d");
+
+      const img =
+  container.querySelector("img");
+
+function setupCanvas() {
+  requestAnimationFrame(() => {
+    canvas.width = img.clientWidth;
+    canvas.height = img.clientHeight;
+
+    ctx.fillStyle = "#ff4f81";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  });
+}
+
+function getScratchPercentage() {
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+
+  let transparentPixels = 0;
+
+  for (let i = 3; i < imageData.length; i += 4) {
+    if (imageData[i] === 0) transparentPixels++;
+  }
+
+  return (transparentPixels / (imageData.length / 4)) * 100;
+}
+
+if (img.complete) {
+  setupCanvas();
+} else {
+  img.onload = setupCanvas;
+}
+ 
+      let scratching = false;
+
+      function scratch(e) {
+        console.log("Scratching...");
+
+        const rect =
+          canvas.getBoundingClientRect();
+
+        const x =
+          (e.touches ? e.touches[0].clientX : e.clientX)
+          - rect.left;
+
+        const y =
+          (e.touches ? e.touches[0].clientY : e.clientY)
+          - rect.top;
+
+       ctx.globalCompositeOperation =
+  "destination-out";
+
+ctx.beginPath();
+ctx.arc(x, y, 25, 0, Math.PI * 2);
+ctx.fill();
+
+container.classList.add("interacted");
+
+const scratched =
+  getScratchPercentage();
+console.log("Scratched %:", scratched);
+
+if (scratched >= 30) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  canvas.style.opacity = "0";
+  canvas.style.pointerEvents = "none";
+  container.style.pointerEvents = "none";
+  downloadBtn.classList.add("show");
+}
+      }
+
+      canvas.addEventListener("mousedown", e => {
+  scratching = true;
+  scratch(e);
+});
+
+canvas.addEventListener("mousemove", e => {
+  if (scratching) {
+    scratch(e);
+  }
+});
+
+window.addEventListener("mouseup", () => {
+  scratching = false;
+});
+      canvas.addEventListener(
+  "touchstart",
+  e => {
+    scratching = true;
+    scratch(e);
+  }
+);
+      canvas.addEventListener("touchend", () => scratching = false);
+      canvas.addEventListener("touchmove", e => {
+        if(scratching) scratch(e);
+      });
+    });
+}
+function startConfetti() {
+  const canvas = document.getElementById("confettiCanvas");
+const ctx = canvas.getContext("2d", { willReadFrequently: true });
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const pieces = [];
+
+  for (let i = 0; i < 250; i++) {
+    pieces.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      size: Math.random() * 8 + 4,
+      speed: Math.random() * 3 + 2,
+      angle: Math.random() * 360,
+      color: `hsl(${Math.random() * 360}, 100%, 60%)`
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    pieces.forEach(p => {
+      p.y += p.speed;
+      p.angle += 5;
+
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.angle * Math.PI / 180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+      ctx.restore();
+
+      if (p.y > canvas.height) {
+        p.y = -10;
+        p.x = Math.random() * canvas.width;
+      }
+    });
+
+    requestAnimationFrame(draw);
+  }
+
+  draw();
+
+  // stop after 4 seconds
+  setTimeout(() => {
+    canvas.remove();
+  }, 4000);
+}
+window.addEventListener("load", () => {
+  startConfetti();
+});
+const favicon = document.getElementById("dynamic-favicon");
+
+const icons = [
+  "🎂",
+  "🎉",
+  "✨",
+  "💖"
+];
+
+let index = 0;
+
+function updateFavicon() {
+  const emoji = icons[index];
+
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+      <text y=".9em" font-size="90">${emoji}</text>
+    </svg>
+  `;
+
+  const url = "data:image/svg+xml," + encodeURIComponent(svg);
+
+  favicon.href = url;
+
+  index = (index + 1) % icons.length;
+}
+
+// change every 700ms
+setInterval(updateFavicon, 700);
+
+// initial load
+updateFavicon();
+</script>
+<canvas id="confettiCanvas"></canvas>
+</body>
+</html>
